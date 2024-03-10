@@ -1,0 +1,71 @@
+<div class="container mt-3 mb-5">
+  <% if(recipe != null ) { %>
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <%- recipe.title %>
+      </li>
+    </ol>
+  </nav>
+  <div class="row">
+    
+    <div class="container mt-4 mb-4">
+      Posted By: <img src="<%= recipe.createdBy.profileUrl %>" alt="" width="30px"> <%= recipe.createdBy.fullname %>
+    </div>
+
+    <div class="col-12 col-md-4 recipe-img">
+      <img
+        src="<%- recipe.image %>"
+        class="img-fluid sticky-top"
+        style="top: 20px"
+        alt="<%- recipe.title %>"
+        loading="lazy"
+      />
+    </div>
+
+    <div class="col-12 col-md-8">
+      <div class="row">
+        <div class="col-12"><h1><%- recipe.title %></h1></div>
+        <div class="col-12 mb-4">
+          <i class="bi bi-tag"></i> <%- recipe.category %>
+        </div>
+        <div class="col-12" style="white-space: pre-line">
+          <h4>Cooking Instructions</h4>
+          <%- recipe.description %>
+        </div>
+      </div>
+
+      <div class="row pt-4">
+        <div class="col-12">
+          <h4>Ingredients</h4>
+          <ul class="list-group list-group-flush">
+            <% recipe.ingredients.forEach(function(ingredients, index){ %>
+            <li class="list-group-item"><%= ingredients %></li>
+            <% }) %>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h1 class="mt-5">Comments: (<%= comments.length %>)</h1>
+    <% if (locals.user) { %>
+      <form action="/comments/<%- recipe._id %>" method="post">
+        <div class="mb-3">
+          <input type="text" class="form-control" name="content" id="exampleCheck1" placeholder="Comment Here...">
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+    <% } %>
+    <% comments.forEach(comment => { %>
+      <div class="container mt-4">
+        <img src="<%= comment.createdBy.profileUrl %>" alt="" width="30px"> <%= comment.createdBy.fullname %>
+      </div>
+      <p class="ms-1"><%= comment.content %></p>
+  <% }) %>
+  </div>
+  <% } else { %>
+  <p>No item found.</p>
+  <% } %>
+</div>

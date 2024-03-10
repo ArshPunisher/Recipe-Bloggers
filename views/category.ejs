@@ -1,0 +1,50 @@
+<div class="container">
+  <% if(typeof categoriesByID !== 'undefined' && categoriesByID.length > 0) { %>
+    <h1 class="pb-4 mt-3"><%- categoriesByID[0].category %> Recipes</h1>
+    <% } else { %>
+      <h1 class="pb-4 mt-3">Explore Categories</h1>
+    <% } %>
+
+  
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="/category">Categories</a></li>
+      <% if(typeof categoriesByID !== 'undefined' && categoriesByID.length > 0) { %>
+      <li class="breadcrumb-item active" aria-current="page"><%- categoriesByID[0].category %></li>
+      <% } else { %>
+        <li class="breadcrumb-item active" aria-current="page">Explore Categories</li>
+      <% } %>
+    </ol>
+  </nav>
+ 
+  <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 mb-4">
+    <% if(typeof categories !== 'undefined' && categories.length > 0) { %>
+      <% categories.forEach(function(category, index) { %>
+        <a href="/category/<%- category.name %>" class="col text-center category__link">
+          <div class="category__img shadow">
+            <img src="/images/<%- category.image %>" alt="<%- category.name %>" loading="lazy">
+          </div>
+          <div class="pt-1"><%- category.name %></div>
+        </a>
+      <% }) %>
+    <% } %>
+  </div>
+
+
+  <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2 mt-3">
+    <% if(typeof categoriesByID !== 'undefined' && categoriesByID.length > 0) { %>
+      <% categoriesByID.forEach(function(recipe, index){ %>
+      <a href="/recipe/<%= recipe._id %>" class="col text-center category__link">
+        <div class="category__img category__img--large shadow">
+          <img src="<%= recipe.image %>" alt="<%= recipe.title %>" loading="lazy">
+        </div>
+        <div class="pt-1"><%= recipe.title %></div>
+      </a>
+      <% }) %>
+    <% } else { %>
+      <p></p>
+    <% } %>
+  </div>
+
+</div>
